@@ -2,17 +2,15 @@ package com.ibdknox.socket_io_netty;
 
 public class ShutdownHook extends java.lang.Thread {
 	
-	private INSIOHandler handler;
+	private NSIOServer server;
 
-	public ShutdownHook(INSIOHandler handler) {
-		this.handler = handler;
+	public ShutdownHook(NSIOServer server) {
+		this.server = server;
 	}
 	
 	@Override
 	public void run() {
-		System.out.println("**Shutting down the NSIO server");
-		handler.OnShutdown();
-		System.out.println("**SHUTDOWN**");
+		server.stop();
 	}
 	
 

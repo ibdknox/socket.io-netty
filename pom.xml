@@ -2,8 +2,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.ibdknox.socket_io-netty</groupId>
-  <artifactId>socket.io-netty</artifactId>
+  <groupId>com.ibdknox.socket_io_netty</groupId>
+  <artifactId>socket-io-netty</artifactId>
   <version>0.2</version>
   <packaging>jar</packaging>
 
