@@ -15,12 +15,16 @@ public class NSIOServer {
     private ServerBootstrap bootstrap;
     private Channel serverChannel;
     private int port;
+    private boolean running;
     private INSIOHandler handler;
 
     public NSIOServer(INSIOHandler handler, int port) {
         this.port = port;
         this.handler = handler;
-
+        Runtime.getRuntime().addShutdownHook(new ShutdownHook(this));
+    }
+    
+	public void start() {
 		bootstrap = new ServerBootstrap(
                 new NioServerSocketChannelFactory(
                         Executors.newCachedThreadPool(),
@@ -29,26 +33,24 @@ public class NSIOServer {
         // Set up the event pipeline factory.
         WebSocketServerHandler socketHandler = new WebSocketServerHandler(handler);
         bootstrap.setPipelineFactory(new WebSocketServerPipelineFactory(socketHandler));
-        
-        Runtime.getRuntime().addShutdownHook(new ShutdownHook(this));
-    }
-    
-	/**
-	 * @param args
-	 */
-	public void start() {
         // Bind and start to accept incoming connections.
         this.serverChannel = bootstrap.bind(new InetSocketAddress(port));
         FlashPolicyServer.start();
         System.out.println("Server Started at port ["+ port + "]");
+        this.running = true;
 	}
 
     public void stop() {
+        if(!this.running) return;
+
         System.out.println("Server shutting down.");
         this.handler.OnShutdown();
         this.serverChannel.close();
         this.bootstrap.releaseExternalResources();
         System.out.println("**SHUTDOWN**");
+        this.serverChannel = null;
+        this.bootstrap = null;
+        this.running = false;
     }
 
 }
