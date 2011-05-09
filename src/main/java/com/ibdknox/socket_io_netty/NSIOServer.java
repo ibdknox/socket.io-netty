@@ -8,8 +8,6 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
-
-//TODO: turn this into an instanceable class so we can shut it down.
 public class NSIOServer {
 
     private ServerBootstrap bootstrap;
@@ -21,7 +19,12 @@ public class NSIOServer {
     public NSIOServer(INSIOHandler handler, int port) {
         this.port = port;
         this.handler = handler;
+        this.running = false;
         Runtime.getRuntime().addShutdownHook(new ShutdownHook(this));
+    }
+
+    public boolean isRunning() {
+        return this.running;
     }
     
 	public void start() {
@@ -35,9 +38,13 @@ public class NSIOServer {
         bootstrap.setPipelineFactory(new WebSocketServerPipelineFactory(socketHandler));
         // Bind and start to accept incoming connections.
         this.serverChannel = bootstrap.bind(new InetSocketAddress(port));
-        FlashPolicyServer.start();
-        System.out.println("Server Started at port ["+ port + "]");
         this.running = true;
+        try {
+            FlashPolicyServer.start();
+        } catch (Exception e) { //TODO: this should not be exception
+            System.out.println("You must run as sudo for flash policy server. X-Domain flash will not currently work.");
+        }
+        System.out.println("Server Started at port ["+ port + "]");
 	}
 
     public void stop() {
