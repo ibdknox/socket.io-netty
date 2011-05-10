@@ -80,7 +80,6 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
     };
     
     public void disconnect(INSIOClient client) {
-    	System.out.println("Disconnecting a client!");
     	client.disconnect() ;
     	if(this.clients.remove(client.getCTX()) == null) {
     		this.pollingClients.remove(client.getSessionID());
@@ -120,7 +119,6 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
     			//we got a message
     			QueryStringDecoder decoder = new QueryStringDecoder("/?" + req.getContent().toString(CharsetUtil.UTF_8));
     			String message = decoder.getParameters().get("data").get(0);
-    			System.out.println("Polling send: " + message);
     			handleMessage(client, message);
     			sendHttpResponse(ctx, req, new DefaultHttpResponse(HTTP_1_1, OK));
     			//client.Reconnect(ctx, req);
