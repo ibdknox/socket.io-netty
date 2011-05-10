@@ -1,41 +1,62 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+ <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.ibdknox.socket_io_netty</groupId>
-  <artifactId>socket-io-netty</artifactId>
-  <version>0.3.2</version>
-  <packaging>jar</packaging>
+ <groupId>com.ibdknox.socket_io_netty</groupId>
+ <artifactId>socket-io-netty</artifactId>
+ <version>0.3.2</version>
+ <packaging>jar</packaging>
 
-  <name>socket.io-netty</name>
-  <url>http://maven.apache.org</url>
+ <name>socket.io-netty</name>
+ <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+ <properties>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+ </properties>
 
-  <repositories>
-     <repository>
-       <id>repository.jboss.org</id>
-       <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
-       <snapshots>
-         <enabled>false</enabled>
-       </snapshots>
-     </repository>
-   </repositories>
+ <repositories>
+  <repository>
+   <id>repository.jboss.org</id>
+   <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+   <snapshots>
+    <enabled>false</enabled>
+   </snapshots>
+  </repository>
+ </repositories>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-       <groupId>org.jboss.netty</groupId>
-       <artifactId>netty</artifactId>
-       <version>3.2.1.Final</version>
-       <scope>compile</scope>
-     </dependency>
-  </dependencies>
+ <dependencies>
+  <dependency>
+   <groupId>junit</groupId>
+   <artifactId>junit</artifactId>
+   <version>3.8.1</version>
+   <scope>test</scope>
+  </dependency>
+  <dependency>
+   <groupId>org.jboss.netty</groupId>
+   <artifactId>netty</artifactId>
+   <version>3.2.1.Final</version>
+   <scope>compile</scope>
+  </dependency>
+ </dependencies>
+
+ <build>
+  <plugins>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <executions>
+     <execution>
+      <phase>package</phase>
+      <goals>
+       <goal>shade</goal>
+      </goals>
+     </execution>
+    </executions>
+    <configuration>
+     <finalName>uber-${artifactId}-${version}</finalName>
+    </configuration>
+   </plugin>
+  </plugins>
+ </build>
+
 </project>
