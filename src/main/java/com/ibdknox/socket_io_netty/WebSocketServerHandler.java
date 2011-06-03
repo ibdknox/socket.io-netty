@@ -120,8 +120,14 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
     			QueryStringDecoder decoder = new QueryStringDecoder("/?" + req.getContent().toString(CharsetUtil.UTF_8));
     			String message = decoder.getParameters().get("data").get(0);
     			handleMessage(client, message);
-    			sendHttpResponse(ctx, req, new DefaultHttpResponse(HTTP_1_1, OK));
-    			//client.Reconnect(ctx, req);
+
+                //make sure the connection is closed once we send a response
+                setKeepAlive(req, false);
+
+                //send a response that allows for cross domain access
+                HttpResponse resp = new DefaultHttpResponse(HTTP_1_1, OK);
+                resp.addHeader("Access-Control-Allow-Origin", "*");
+    			sendHttpResponse(ctx, req, resp);
     		}
     		return;
     	}
