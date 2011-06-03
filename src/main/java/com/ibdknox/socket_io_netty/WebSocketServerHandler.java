@@ -72,12 +72,12 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
     }
 
     @Override
-        public void channelDisconnected(ChannelHandlerContext ctx, org.jboss.netty.channel.ChannelStateEvent e) throws Exception {
-            INSIOClient client = getClientByCTX(ctx);
-            if(client != null) {
-                this.disconnect(client);
-            }
-        };
+    public void channelDisconnected(ChannelHandlerContext ctx, org.jboss.netty.channel.ChannelStateEvent e) throws Exception {
+        INSIOClient client = getClientByCTX(ctx);
+        if(client != null) {
+            this.disconnect(client);
+        }
+    };
 
     public void disconnect(INSIOClient client) {
         client.disconnect() ;
