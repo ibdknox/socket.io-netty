@@ -5,8 +5,8 @@ import org.jboss.netty.handler.codec.http.websocket.WebSocketFrame;
 
 
 public interface INSIOHandler {
-	void OnConnect(INSIOClient ws);
-	void OnMessage(INSIOClient ws, String message);
-	void OnDisconnect(INSIOClient ws);
+    void OnConnect(INSIOClient ws);
+    void OnMessage(INSIOClient ws, String message);
+    void OnDisconnect(INSIOClient ws);
     void OnShutdown();
 }

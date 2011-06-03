@@ -12,12 +12,12 @@ public class FlashPolicyServer {
     public static Channel serverChannel;
     public static ServerBootstrap bootstrap;
 
-	public static void start() {
-		// Configure the server.
+    public static void start() {
+        // Configure the server.
         bootstrap = new ServerBootstrap(
                 new NioServerSocketChannelFactory(
-                        Executors.newCachedThreadPool(),
-                        Executors.newCachedThreadPool()));
+                    Executors.newCachedThreadPool(),
+                    Executors.newCachedThreadPool()));
 
         // Set up the event pipeline factory.
         bootstrap.setPipelineFactory(new FlashPolicyServerPipelineFactory());
@@ -27,11 +27,11 @@ public class FlashPolicyServer {
 
         // Bind and start to accept incoming connections.
         serverChannel = bootstrap.bind(new InetSocketAddress(843));
-	}
+    }
 
     public static void stop() {
         serverChannel.close();
         bootstrap.releaseExternalResources();
     }
-	
+
 }

@@ -26,12 +26,12 @@ public class NSIOServer {
     public boolean isRunning() {
         return this.running;
     }
-    
-	public void start() {
-		bootstrap = new ServerBootstrap(
+
+    public void start() {
+        bootstrap = new ServerBootstrap(
                 new NioServerSocketChannelFactory(
-                        Executors.newCachedThreadPool(),
-                        Executors.newCachedThreadPool()));
+                    Executors.newCachedThreadPool(),
+                    Executors.newCachedThreadPool()));
 
         // Set up the event pipeline factory.
         WebSocketServerHandler socketHandler = new WebSocketServerHandler(handler);
@@ -45,7 +45,7 @@ public class NSIOServer {
             System.out.println("You must run as sudo for flash policy server. X-Domain flash will not currently work.");
         }
         System.out.println("Server Started at port ["+ port + "]");
-	}
+    }
 
     public void stop() {
         if(!this.running) return;
