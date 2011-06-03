@@ -9,13 +9,13 @@ import org.jboss.netty.handler.codec.http.HttpRequestDecoder;
 import org.jboss.netty.handler.codec.http.HttpResponseEncoder;
 
 public class WebSocketServerPipelineFactory implements ChannelPipelineFactory {
-	private WebSocketServerHandler socketHandler;
-    
+    private WebSocketServerHandler socketHandler;
+
     public WebSocketServerPipelineFactory(WebSocketServerHandler handler) {
-    	this.socketHandler = handler;
+        this.socketHandler = handler;
     }
 
-	public ChannelPipeline getPipeline() throws Exception {
+    public ChannelPipeline getPipeline() throws Exception {
         // Create a default pipeline implementation.
         ChannelPipeline pipeline = pipeline();
         pipeline.addLast("decoder", new HttpRequestDecoder());
