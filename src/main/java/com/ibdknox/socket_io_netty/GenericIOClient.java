@@ -1,5 +1,6 @@
 package com.ibdknox.socket_io_netty;
 
+import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 
 public abstract class GenericIOClient implements INSIOClient {
@@ -53,7 +54,14 @@ public abstract class GenericIOClient implements INSIOClient {
     }
 
     @Override
-    public abstract void disconnect();
+    public void disconnect() {
+        Channel chan = ctx.getChannel();
+        if(chan.isOpen()) {
+           chan.disconnect();
+        }
+        this.open = false;
+    }
+
     @Override
     public abstract void sendUnencoded(String message);
 }

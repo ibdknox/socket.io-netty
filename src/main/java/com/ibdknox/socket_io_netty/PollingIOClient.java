@@ -84,12 +84,6 @@ public class PollingIOClient extends GenericIOClient {
         _payload();
     }
 
-    @Override
-    public void disconnect() {
-        ctx.getChannel().disconnect();
-        this.open = false;
-    }
-
     public void sendPulse() {
         if(connected) {
             _write("");

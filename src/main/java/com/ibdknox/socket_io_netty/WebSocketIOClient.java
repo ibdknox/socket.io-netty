@@ -22,11 +22,4 @@ public class WebSocketIOClient extends GenericIOClient {
             this.disconnect();
         }
     }
-
-    @Override
-    public void disconnect() {
-        ctx.getChannel().disconnect();
-        this.open = false;
-    }
-
 }
