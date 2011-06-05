@@ -16,20 +16,16 @@ public abstract class GenericIOClient implements INSIOClient {
         this.open = true;
     }
 
-    @Override
     public void send(String message) {
         sendUnencoded(SocketIOUtils.encode(message));
     }
 
-
-    @Override
     public void heartbeat() {
         if(this.beat > 0) {
             this.beat++;
         }
     }
 
-    @Override
     public boolean heartbeat(int beat) {
         if(!this.open) return false;
 
@@ -43,25 +39,21 @@ public abstract class GenericIOClient implements INSIOClient {
         return true;
     }
 
-    @Override
     public ChannelHandlerContext getCTX() {
         return this.ctx;
     }
 
-    @Override
     public String getSessionID() {
         return this.uID;
     }
 
-    @Override
     public void disconnect() {
         Channel chan = ctx.getChannel();
         if(chan.isOpen()) {
-           chan.disconnect();
+           chan.close();
         }
         this.open = false;
     }
 
-    @Override
     public abstract void sendUnencoded(String message);
 }

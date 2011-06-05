@@ -15,6 +15,7 @@ public class NSIOServer {
     private int port;
     private boolean running;
     private INSIOHandler handler;
+    private WebSocketServerHandler socketHandler;
 
     public NSIOServer(INSIOHandler handler, int port) {
         this.port = port;
@@ -34,7 +35,7 @@ public class NSIOServer {
                     Executors.newCachedThreadPool()));
 
         // Set up the event pipeline factory.
-        WebSocketServerHandler socketHandler = new WebSocketServerHandler(handler);
+        socketHandler = new WebSocketServerHandler(handler);
         bootstrap.setPipelineFactory(new WebSocketServerPipelineFactory(socketHandler));
         // Bind and start to accept incoming connections.
         this.serverChannel = bootstrap.bind(new InetSocketAddress(port));
@@ -51,6 +52,7 @@ public class NSIOServer {
         if(!this.running) return;
 
         System.out.println("Server shutting down.");
+        this.socketHandler.prepShutDown();
         this.handler.OnShutdown();
         this.serverChannel.close();
         this.bootstrap.releaseExternalResources();

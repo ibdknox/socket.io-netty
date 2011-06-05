@@ -80,7 +80,7 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
     };
 
     public void disconnect(INSIOClient client) {
-        client.disconnect() ;
+        client.disconnect();
         if(this.clients.remove(client.getCTX()) == null) {
             this.pollingClients.remove(client.getSessionID());
         }
@@ -247,6 +247,10 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
         if (!isKeepAlive(req) || res.getStatus().getCode() != 200) {
             f.addListener(ChannelFutureListener.CLOSE);
         }
+    }
+
+    public void prepShutDown() {
+        this.heartbeatTimer.cancel();
     }
 
     @Override
