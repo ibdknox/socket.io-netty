@@ -35,4 +35,11 @@ public class AppTest
     {
         assertTrue( true );
     }
+
+    public void testDecode()
+    {
+        String msg = "~m~16~m~{\n user : {\n  }\n}";
+        String decode = com.ibdknox.socket_io_netty.SocketIOUtils.decode(msg);
+        assertTrue( decode.equals("{\n user : {\n  }\n}") );
+    }
 }
